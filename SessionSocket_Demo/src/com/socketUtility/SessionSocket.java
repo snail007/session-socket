@@ -27,7 +27,7 @@ public abstract class SessionSocket implements Runnable{
 	/**
 	 * 读取数据使用的缓存区大小,单位KB
 	 */
-	private int BUFFER_SIZE=1024;
+	private int BUFFER_SIZE=5;
 	/**
 	 * 允许的最大连接数,0不限制
 	 */
