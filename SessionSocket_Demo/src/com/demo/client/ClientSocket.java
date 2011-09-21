@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Random;
+
 import com.socketUtility.SessionSocket;
 
 
@@ -33,15 +35,17 @@ public class ClientSocket extends SessionSocket{
     public static void main(String args[]) {
     	Socket socket;
 		try {
+			//for(int i=0;i<10000;i++){
 			socket = new Socket(args[0],Integer.valueOf(args[1]));
 			ClientSocket clientSocket=new ClientSocket(socket);
 			//启动ClientSocket线程
 			clientSocket.start();
-			
 			Thread iMonitor=new Thread(clientSocket.new InputMonitor());
 			iMonitor.setDaemon(true);
 			//启动输入
 			iMonitor.start();
+			//}
+			
 		} catch (UnknownHostException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -54,6 +58,11 @@ public class ClientSocket extends SessionSocket{
 	}
 	public void onConnected(Socket socket, Thread thread) {
 		System.out.println("连接服务器成功！");
+		try {
+			sendMessage("test".getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public void onDataArrived(byte[] data, Socket socket, Thread thread) {
 		System.out.println(new String(data));
